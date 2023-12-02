@@ -1,1 +1,1 @@
-The code I write for the PiHut's [Maker Advent Calendar](https://thepihut.com/products/maker-advent-calendar-let-it-glow-inc-raspberry-pi-pico-h)
+The code I write for the PiHut's [Maker Advent Calendar - Let it Glow](https://thepihut.com/products/maker-advent-calendar-let-it-glow-inc-raspberry-pi-pico-h)
