@@ -1,6 +1,11 @@
 from machine import Pin
+import time
 
-onboardLED = Pin(25, Pin.OUT)
-onboardLED.value(1)
+red = Pin(14, Pin.OUT)
 
-print("Light on")
+for i in range(10):
+    red.value(1)
+    time.sleep(0.5)
+
+    red.value(0)
+    time.sleep(0.5)
