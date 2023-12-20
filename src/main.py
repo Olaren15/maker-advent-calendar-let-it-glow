@@ -1,29 +1,50 @@
-# Imports
 from machine import Pin
 import time
 
 # Set up input pins
-red_button = Pin(2, Pin.IN, Pin.PULL_DOWN)
-green_button = Pin(3, Pin.IN, Pin.PULL_DOWN)
+redbutton = Pin(2, Pin.IN, Pin.PULL_DOWN)
+greenbutton = Pin(3, Pin.IN, Pin.PULL_DOWN)
 
-# Set up output pins
-red_led = Pin(14, Pin.OUT)
+# Set up LED pins
+seg1 = Pin(13, Pin.OUT)
+seg2 = Pin(12, Pin.OUT)
+seg3 = Pin(11, Pin.OUT)
+seg4 = Pin(10, Pin.OUT)
+seg5 = Pin(9, Pin.OUT)
 
-# Set up counter variable
-count = 0
+# Create a list of our LEDs
+segments = [seg1, seg2, seg3, seg4, seg5]
+
+# Set the initial count for the index
+count = -1
+
+# Turn off all LEDs to start
+seg1.value(0)
+seg2.value(0)
+seg3.value(0)
+seg4.value(0)
+seg5.value(0)
 
 while True:
 
-    time.sleep(0.2)
+    time.sleep(0.01)  # Short delay to avoid the program running too fast
 
-    red_led.value(0)  # LED off until button press
+    if redbutton.value() == 1:  # If red button pressed
 
-    if red_button.value() == 1:
-        count = count - 1
-        red_led.value(1)  # LED on
-        print(count)
+        if count == 4:  # If the count is already 4
+            pass  # Do nothing
 
-    if green_button.value() == 1:
-        count = count + 1
-        red_led.value(1)  # LED on
-        print(count)
+        else:
+            count = count + 1  # Add 1 to our counter
+            segments[count].value(1)  # Light the LED index for the count
+            time.sleep(0.2)
+
+    if greenbutton.value() == 1:  # If green button pressed
+
+        if count == -1:  # If count is already -1
+            pass  # Do nothing
+
+        else:
+            segments[count].value(0)  # Turn off the LED index for the count
+            time.sleep(0.2)
+            count = count - 1  # Remove 1 from our counter
