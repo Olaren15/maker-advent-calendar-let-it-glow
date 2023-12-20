@@ -1,11 +1,29 @@
+# Imports
 from machine import Pin
 import time
 
-red = Pin(14, Pin.OUT)
+# Set up input pins
+red_button = Pin(2, Pin.IN, Pin.PULL_DOWN)
+green_button = Pin(3, Pin.IN, Pin.PULL_DOWN)
 
-for i in range(10):
-    red.value(1)
-    time.sleep(0.5)
+# Set up output pins
+red_led = Pin(14, Pin.OUT)
 
-    red.value(0)
-    time.sleep(0.5)
+# Set up counter variable
+count = 0
+
+while True:
+
+    time.sleep(0.2)
+
+    red_led.value(0)  # LED off until button press
+
+    if red_button.value() == 1:
+        count = count - 1
+        red_led.value(1)  # LED on
+        print(count)
+
+    if green_button.value() == 1:
+        count = count + 1
+        red_led.value(1)  # LED on
+        print(count)
