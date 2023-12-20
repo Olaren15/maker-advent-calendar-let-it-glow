@@ -1,9 +1,12 @@
 from machine import Pin
 import time
 
-# Set up input pins
-redbutton = Pin(2, Pin.IN, Pin.PULL_DOWN)
-greenbutton = Pin(3, Pin.IN, Pin.PULL_DOWN)
+# Set up switch input pins
+dip1 = Pin(6, Pin.IN, Pin.PULL_DOWN)
+dip2 = Pin(5, Pin.IN, Pin.PULL_DOWN)
+dip3 = Pin(4, Pin.IN, Pin.PULL_DOWN)
+dip4 = Pin(3, Pin.IN, Pin.PULL_DOWN)
+dip5 = Pin(2, Pin.IN, Pin.PULL_DOWN)
 
 # Set up LED pins
 seg1 = Pin(13, Pin.OUT)
@@ -15,36 +18,34 @@ seg5 = Pin(9, Pin.OUT)
 # Create a list of our LEDs
 segments = [seg1, seg2, seg3, seg4, seg5]
 
-# Set the initial count for the index
-count = -1
 
-# Turn off all LEDs to start
-seg1.value(0)
-seg2.value(0)
-seg3.value(0)
-seg4.value(0)
-seg5.value(0)
+# Create our first function
+def program1():
+    for led in segments:
+        led.value(1)
+        time.sleep(0.1)
+        led.value(0)
 
+
+# Create our second function
+def program2():
+    for led in reversed(segments):
+        led.value(1)
+        time.sleep(0.1)
+        led.value(0)
+
+
+# Start the main program loop
 while True:
 
-    time.sleep(0.01)  # Short delay to avoid the program running too fast
+    # Switch 1
+    if dip1.value() == 1 or dip2.value() == 1:
 
-    if redbutton.value() == 1:  # If red button pressed
+        print("Program #1 running...")
+        program1()
 
-        if count == 4:  # If the count is already 4
-            pass  # Do nothing
+    # Switch 2
+    elif dip3.value() == 1 or dip4.value() == 1:
 
-        else:
-            count = count + 1  # Add 1 to our counter
-            segments[count].value(1)  # Light the LED index for the count
-            time.sleep(0.2)
-
-    if greenbutton.value() == 1:  # If green button pressed
-
-        if count == -1:  # If count is already -1
-            pass  # Do nothing
-
-        else:
-            segments[count].value(0)  # Turn off the LED index for the count
-            time.sleep(0.2)
-            count = count - 1  # Remove 1 from our counter
+        print("Program #2 running...")
+        program2()
